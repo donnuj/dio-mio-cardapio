@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cardápio Dio Mio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper:  #FDFAF4;
+  --ink:    #1C1714;
+  --gold:   #C0A476;
+  --rust:   #A8341A;
+  --taupe:  #7C6F62;
+  --rule:   #E0D8C8;
+  --cream:  #F5F0E6;
+}
+
+@page { size: A4; margin: 0; }
+
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #E8E2D8;
+  color: var(--ink);
+  width: 210mm;
+  margin: 0 auto;
+}
+
+/* ── CAPA ── */
+.cover {
+  width: 210mm;
+  height: 297mm;
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  page-break-after: always;
+}
+
+/* moldura dupla tipo papel timbrado */
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 9mm;
+  border: 0.75px solid rgba(28,23,20,.18);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 11mm;
+  border: 0.4px solid rgba(28,23,20,.09);
+}
+
+.cv-band-t {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6mm;
+  background: var(--ink);
+}
+.cv-band-b {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6mm;
+  background: var(--ink);
+}
+
+.cv-eye {
+  font-size: 6.5pt;
+  font-weight: 500;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--taupe);
+  margin-bottom: 22px;
+}
+
+.cv-orn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+.cv-orn-l { width: 28px; height: 0.5px; background: var(--gold); }
+.cv-orn-d { width: 3px; height: 3px; background: var(--gold); border-radius: 50%; }
+
+.cv-title {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 72pt;
+  font-weight: 300;
+  line-height: .88;
+  letter-spacing: .02em;
+  color: var(--ink);
+}
+.cv-title em { font-style: italic; font-weight: 600; letter-spacing: -.01em; }
+
+.cv-rule {
+  width: 40px;
+  height: 0.75px;
+  background: var(--gold);
+  margin: 24px auto;
+}
+
+.cv-sub {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 12.5pt;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--taupe);
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+
+.cv-foot {
+  position: absolute;
+  bottom: 14mm;
+  left: 0; right: 0;
+  text-align: center;
+}
+.cv-foot-l  { font-size: 6.5pt; letter-spacing: .25em; text-transform: uppercase; color: rgba(28,23,20,.35); }
+.cv-foot-ph { font-size: 8.5pt; letter-spacing: .08em; color: var(--taupe); margin-top: 5px; }
+
+/* ── PÁGINA ── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 13mm 18mm 13mm;
+  background: var(--paper);
+  page-break-before: always;
+  position: relative;
+}
+
+/* borda fina em todas as páginas de conteúdo */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 6.5mm;
+  border: 0.5px solid rgba(28,23,20,.13);
+  pointer-events: none;
+}
+
+/* faixa preta no topo de cada página */
+.page::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4.5mm;
+  background: var(--ink);
+  pointer-events: none;
+}
+
+/* ── CABEÇALHO ── */
+.ph {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  margin-bottom: 12px;
+  position: relative;
+}
+.ph::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: .75px;
+  background: linear-gradient(90deg, var(--ink) 0%, var(--gold) 50%, var(--ink) 100%);
+  opacity: .35;
+}
+.ph::before {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: .4px;
+  background: var(--ink);
+  opacity: .10;
+}
+.ph-b {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 9pt;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.ph-s { font-size: 7pt; letter-spacing: .12em; text-transform: uppercase; color: var(--taupe); }
+
+/* ── TÍTULO DE SEÇÃO ── */
+.sec-t {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: .01em;
+}
+.sec-n {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 9pt;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--taupe);
+  margin-top: 2px;
+  margin-bottom: 11px;
+}
+
+/* ── SUBCATEGORIA ── */
+.sub {
+  font-size: 6.5pt;
+  font-weight: 500;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin: 10px 0 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sub::after { content: ''; flex: 1; height: .5px; background: var(--rust); opacity: .22; }
+
+/* ── GRID ── */
+.items { display: grid; grid-template-columns: 1fr 1fr; gap: 0 13px; }
+
+/* ── ITEM regular ── */
+.item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 6px 0;
+  border-bottom: .75px solid var(--rule);
+}
+.item-body { flex: 1; min-width: 0; }
+.item-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  filter: sepia(8%) contrast(1.02);
+}
+
+/* ── ITEM destaque ── */
+.item-full {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 12px;
+  border-bottom: .75px solid var(--rule);
+  background: rgba(28,23,20,.03);
+  border-radius: 3px;
+  margin-bottom: 3px;
+}
+.item-full .item-img {
+  width: 84px;
+  height: 84px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  filter: sepia(8%) contrast(1.02);
+}
+.item-full .item-body { flex: 1; min-width: 0; }
+
+.i-name {
+  font-family: 'Cormorant Garant', serif;
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.i-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: 5.5pt;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  border: .5px solid var(--rust);
+  padding: 1px 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.i-desc {
+  font-size: 7.5pt;
+  font-weight: 300;
+  color: var(--taupe);
+  line-height: 1.45;
+  margin-bottom: 3px;
+}
+.i-foot { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.i-p   { font-size: 10pt; font-weight: 600; color: var(--ink); }
+.i-was { font-size: 7.5pt; color: var(--taupe); text-decoration: line-through; }
+.i-dc  { font-size: 6pt; font-weight: 500; color: var(--rust); background: rgba(168,52,26,.09); padding: 1px 4px; border-radius: 2px; }
+
+/* ── COMBOS ── */
+.combo {
+  padding: 8px 12px;
+  border-left: 1.5px solid var(--gold);
+  background: rgba(192,164,118,.06);
+  margin-bottom: 6px;
+  border-radius: 0 3px 3px 0;
+}
+.co-name { font-family: 'Cormorant Garant', serif; font-size: 11.5pt; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.co-desc { font-size: 7.5pt; font-weight: 300; color: var(--taupe); line-height: 1.45; margin-bottom: 4px; }
+.co-p    { font-size: 11pt; font-weight: 600; color: var(--ink); }
+
+/* ── TAMANHOS ── */
+.sizes { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 7px 0; }
+.sz {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 10px 13px;
+  border-radius: 3px;
+}
+.sz-name { font-family: 'Cormorant Garant', serif; font-size: 13.5pt; font-weight: 600; margin-bottom: 1px; }
+.sz-info { font-size: 7pt; color: rgba(245,240,230,.55); margin-bottom: 4px; }
+.sz-p    { font-size: 10pt; font-weight: 400; }
+
+/* ── BEBIDAS ── */
+.bebs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 13px; }
+.beb  { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: .75px solid var(--rule); }
+.b-name { font-size: 9pt; color: var(--ink); }
+.b-p    { font-size: 10pt; font-weight: 600; color: var(--ink); }
+
+.hr { height: .75px; background: var(--rule); margin: 10px 0; }
+
+.foot {
+  text-align: center;
+  font-size: 7pt;
+  color: var(--taupe);
+  letter-spacing: .08em;
+  margin-top: 14px;
+  padding-top: 8px;
+  border-top: .75px solid var(--rule);
+}
+
+@media screen {
+  body { padding: 20px 0; }
+  .cover, .page { margin-bottom: 3px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="cover">
+  <div class="cv-band-t"></div>
+  <div class="cv-band-b"></div>
+
+  <div class="cv-eye">Pizzaria Artesanal &nbsp;·&nbsp; Brasília</div>
+  <div class="cv-orn">
+    <div class="cv-orn-l"></div>
+    <div class="cv-orn-d"></div>
+    <div class="cv-orn-l"></div>
+  </div>
+  <div class="cv-title"><em>Dio</em> Mio</div>
+  <div class="cv-rule"></div>
+  <div class="cv-sub">Massa fina com 72 horas de fermentação</div>
+  <div class="cv-foot">
+    <div class="cv-foot-l">Cardápio</div>
+    <div class="cv-foot-ph">(61) 99365-6010</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2 — SALGADAS 1 -->
+<div class="page">
+  <div class="ph">
+    <span class="ph-b">Dio Mio</span>
+    <span class="ph-s">Pizzas Salgadas</span>
+  </div>
+
+  <div class="sec-t">Pizzas Salgadas</div>
+  <div class="sec-n">Todas as pizzas grandes têm 8 fatias e 35 cm, com massa artesanal de fermentação lenta</div>
+
+  <div class="sub">Assinatura da Casa</div>
+  <div class="items">
+    <div class="item item-full">
+      <img src="dio-mio-imgs/p2_3_200x200.jpeg" alt="Pepperrock" class="item-img">
+      <div class="item-body">
+        <div class="i-name">Pepperrock <span class="i-tag">Autoral</span></div>
+        <div class="i-desc">Molho pomodoro da casa, queijo mozzarella, pepperoni fatiado, cream cheese com azeitonas pretas e alho crocante</div>
+        <div class="i-foot"><span class="i-p">R$ 78,90</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">Clássicas</div>
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Marguerita Tradicional</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, tomatinhos grape, parmesão ralado e manjericão fresco</div>
+        <div class="i-foot"><span class="i-p">R$ 63,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_1_200x200.jpeg" alt="Marguerita Tradicional" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Marguerita de Búfala</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, tomatinhos grape, mozzarella de búfala e manjericão fresco</div>
+        <div class="i-foot"><span class="i-p">R$ 72,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_1_200x200.jpeg" alt="Marguerita de Búfala" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Marinara Clássica</div>
+        <div class="i-desc">Base generosa de molho pomodoro rústico com azeite extra virgem e alho crocante dourado, sem queijo</div>
+        <div class="i-foot"><span class="i-p">R$ 51,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_1_200x200.jpeg" alt="Marinara" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Mussarela Premium</div>
+        <div class="i-desc">Molho pomodoro da casa, generosa camada de mozzarella, fio de azeite extra virgem e orégano</div>
+        <div class="i-foot"><span class="i-p">R$ 63,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_2_200x200.jpeg" alt="Mussarela" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Mussarela Cremosa com Requeijão</div>
+        <div class="i-desc">Molho pomodoro da casa, generosa camada de mozzarella com requeijão cremoso e orégano</div>
+        <div class="i-foot"><span class="i-p">R$ 72,70</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_2_200x200.jpeg" alt="Mussarela Cremosa" class="item-img">
+    </div>
+  </div>
+
+  <div class="sub">Queijos</div>
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Quatro Queijos</div>
+        <div class="i-desc">Molho pomodoro rústico, base de mozzarella, Catupiry Original, gorgonzola e parmesão</div>
+        <div class="i-foot"><span class="i-p">R$ 74,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_15_200x200.jpeg" alt="Quatro Queijos" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Três Queijos</div>
+        <div class="i-desc">Molho pomodoro rústico, base de mozzarella, Catupiry Original e parmesão</div>
+        <div class="i-foot"><span class="i-p">R$ 63,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_2_200x200.jpeg" alt="Três Queijos" class="item-img">
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3 — SALGADAS 2 -->
+<div class="page">
+  <div class="ph">
+    <span class="ph-b">Dio Mio</span>
+    <span class="ph-s">Pizzas Salgadas</span>
+  </div>
+
+  <div class="sub">Carnes</div>
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Pepperoni</div>
+        <div class="i-desc">Molho pomodoro da casa, queijo mozzarella e pepperoni fatiado</div>
+        <div class="i-foot">
+          <span class="i-p">R$ 62,46</span>
+          <span class="i-was">R$ 69,40</span>
+          <span class="i-dc">10% off</span>
+        </div>
+      </div>
+      <img src="dio-mio-imgs/p4_18_159x200.jpeg" alt="Pepperoni" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Calabresa com Cebola</div>
+        <div class="i-desc">Molho pomodoro rústico, queijo mozzarella, calabresa fatiada fininha e cebola</div>
+        <div class="i-foot">
+          <span class="i-p">R$ 57,06</span>
+          <span class="i-was">R$ 63,40</span>
+          <span class="i-dc">10% off</span>
+        </div>
+      </div>
+      <img src="dio-mio-imgs/p1_10_200x140.jpeg" alt="Calabresa com Cebola" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Calabresa Cremosa</div>
+        <div class="i-desc">Molho pomodoro da casa, queijo mozzarella, cream cheese, calabresa fatiada e cebola</div>
+        <div class="i-foot"><span class="i-p">R$ 68,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p3_12_200x140.jpeg" alt="Calabresa Cremosa" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Costela Bovina Desfiada</div>
+        <div class="i-desc">Costela bovina desfiada, mozzarella, cebola roxa, azeitonas pretas e orégano</div>
+        <div class="i-foot">
+          <span class="i-p">R$ 72,59</span>
+          <span class="i-was">R$ 78,90</span>
+          <span class="i-dc">8% off</span>
+        </div>
+      </div>
+      <img src="dio-mio-imgs/p1_2_200x200.jpeg" alt="Costela Bovina Desfiada" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Portuguesa</div>
+        <div class="i-desc">Molho pomodoro, mozzarella, presunto, ovos cozidos, cebola roxa, calabresa, azeitonas pretas e orégano</div>
+        <div class="i-foot"><span class="i-p">R$ 64,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_8_200x200.jpeg" alt="Portuguesa" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Lombo Canadense com Cebola Roxa</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, lombo canadense e cebola roxa</div>
+        <div class="i-foot"><span class="i-p">R$ 68,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_14_200x200.jpeg" alt="Lombo Canadense" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Milho com Bacon Crocante</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, milho verde selecionado e cubos de bacon crocante</div>
+        <div class="i-foot"><span class="i-p">R$ 58,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_9_200x200.jpeg" alt="Milho com Bacon" class="item-img">
+    </div>
+  </div>
+
+  <div class="sub">Frango</div>
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Frango Desfiado Especial</div>
+        <div class="i-desc">Molho pomodoro enriquecido, frango desfiado de coxa e sobrecoxa, milho verde e mozzarella</div>
+        <div class="i-foot"><span class="i-p">R$ 64,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_10_200x200.jpeg" alt="Frango Desfiado" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Frango com Catupiry Original</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, frango desfiado de coxa e sobrecoxa coberto com Catupiry</div>
+        <div class="i-foot"><span class="i-p">R$ 66,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_11_200x200.jpeg" alt="Frango com Catupiry" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Frango com Bacon Crocante</div>
+        <div class="i-desc">Molho pomodoro enriquecido, frango desfiado, milho verde, bacon crocante e mozzarella</div>
+        <div class="i-foot"><span class="i-p">R$ 68,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_12_200x200.jpeg" alt="Frango com Bacon" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Frango com Cheddar e Bacon</div>
+        <div class="i-desc">Molho pomodoro, queijo mozzarella, frango desfiado de coxa e sobrecoxa, cheddar e bacon</div>
+        <div class="i-foot"><span class="i-p">R$ 66,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_13_200x200.jpeg" alt="Frango com Cheddar" class="item-img">
+    </div>
+  </div>
+
+  <div class="sub">Vegetariana</div>
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Brócolis com Alho Crocante</div>
+        <div class="i-desc">Molho pomodoro da casa, queijo mozzarella, brócolis temperado no azeite e alho frito crocante</div>
+        <div class="i-foot">
+          <span class="i-p">R$ 53,89</span>
+          <span class="i-was">R$ 63,40</span>
+          <span class="i-dc">15% off</span>
+        </div>
+      </div>
+      <img src="dio-mio-imgs/p1_3_200x200.jpeg" alt="Brócolis com Alho Crocante" class="item-img">
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4 — DOCES, COMBOS, BEBIDAS -->
+<div class="page">
+  <div class="ph">
+    <span class="ph-b">Dio Mio</span>
+    <span class="ph-s">Doces, Combos e Bebidas</span>
+  </div>
+
+  <div class="sec-t">Pizzas Doces</div>
+  <div class="sec-n">Grandes, 8 fatias e 35 cm, todas com queijo mozzarella na base</div>
+
+  <div class="items">
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Romeu e Julieta</div>
+        <div class="i-desc">Queijo mozzarella e creme de goiabada cascão</div>
+        <div class="i-foot"><span class="i-p">R$ 74,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_5_200x132.jpeg" alt="Romeu e Julieta" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Prestígio</div>
+        <div class="i-desc">Mozzarella, chocolate cremoso derretido e coco ralado</div>
+        <div class="i-foot"><span class="i-p">R$ 73,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p3_1_149x200.jpeg" alt="Prestígio" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Churros</div>
+        <div class="i-desc">Queijo mozzarella, doce de leite de tacho, açúcar cristalizado e canela</div>
+        <div class="i-foot"><span class="i-p">R$ 64,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p1_12_200x151.jpeg" alt="Churros" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Banana com Canela</div>
+        <div class="i-desc">Queijo mozzarella, fatias de banana fresca, canela aromática e açúcar</div>
+        <div class="i-foot"><span class="i-p">R$ 64,40</span></div>
+      </div>
+      <img src="dio-mio-imgs/p2_4_127x200.jpeg" alt="Banana com Canela" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Chocolate ao Leite</div>
+        <div class="i-desc">Queijo mozzarella e chocolate ao leite derretido</div>
+        <div class="i-foot"><span class="i-p">R$ 64,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p3_7_200x150.jpeg" alt="Chocolate ao Leite" class="item-img">
+    </div>
+    <div class="item">
+      <div class="item-body">
+        <div class="i-name">Chocolate Confeitado</div>
+        <div class="i-desc">Queijo mozzarella, chocolate ao leite derretido e discos de chocolate confeitado</div>
+        <div class="i-foot"><span class="i-p">R$ 64,90</span></div>
+      </div>
+      <img src="dio-mio-imgs/p1_13_200x200.jpeg" alt="Chocolate Confeitado" class="item-img">
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <div class="sub">Tamanhos</div>
+  <div class="sizes">
+    <div class="sz">
+      <div class="sz-name">Grande</div>
+      <div class="sz-info">8 fatias · 35 cm · até 2 sabores</div>
+      <div class="sz-p">a partir de R$ 51,90</div>
+    </div>
+    <div class="sz">
+      <div class="sz-name">Média</div>
+      <div class="sz-info">4 fatias · 1 sabor</div>
+      <div class="sz-p">a partir de R$ 36,33</div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <div class="sub">Combos</div>
+  <div class="combo">
+    <div class="co-name">Combo Casal Dio Mio</div>
+    <div class="co-desc">1 Pizza Grande de Calabresa + 1 Pizza Grande de Prestígio + Coca-Cola Zero 2L</div>
+    <div class="co-p">R$ 149,90</div>
+  </div>
+  <div class="combo">
+    <div class="co-name">Combo Autoral Dio Mio</div>
+    <div class="co-desc">1 Pizza Grande de Pepperrock + 1 Pizza Média de Chocolate + Coca-Cola Zero 2L</div>
+    <div class="co-p">R$ 149,90</div>
+  </div>
+  <div class="combo">
+    <div class="co-name">Combo Térmico Dio Mio</div>
+    <div class="co-desc">1 Pizza Grande de Frango com Catupiry + 1 Pizza Grande de Pepperrock + Copo Térmico Exclusivo Dio Mio</div>
+    <div class="co-p">R$ 149,90</div>
+  </div>
+
+  <div class="hr"></div>
+
+  <div class="sub">Bebidas</div>
+  <div class="bebs">
+    <div class="beb"><span class="b-name">Coca-Cola 1,5 L</span><span class="b-p">R$ 14,00</span></div>
+    <div class="beb"><span class="b-name">Coca-Cola Zero 1,5 L</span><span class="b-p">R$ 14,00</span></div>
+    <div class="beb"><span class="b-name">Guaraná Antarctica 1,5 L</span><span class="b-p">R$ 14,00</span></div>
+    <div class="beb"><span class="b-name">Guaraná Antarctica Zero 1,5 L</span><span class="b-p">R$ 14,00</span></div>
+  </div>
+
+  <div class="foot">
+    Pedido mínimo R$ 35,00 &nbsp;·&nbsp; Aberto até as 23h &nbsp;·&nbsp; (61) 99365-6010
+  </div>
+</div>
+
+</body>
+</html>
