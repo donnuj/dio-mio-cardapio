@@ -264,7 +264,32 @@
     .pshell:nth-child(4) { transform: rotate(-.28deg); }
     .pshell:nth-child(5) { transform: rotate(.16deg); }
     .pshell:nth-child(6) { transform: rotate(-.2deg); }
-    .pshell:nth-child(7) { transform: rotate(.18deg); }
+    .pshell:nth-child(7)  { transform: rotate(.18deg); }
+    .pshell:nth-child(8)  { transform: rotate(-.24deg); }
+    .pshell:nth-child(9)  { transform: rotate(.2deg); }
+    .pshell:nth-child(10) { transform: rotate(-.16deg); }
+    .pshell:nth-child(11) { transform: rotate(.23deg); }
+    .pshell:nth-child(12) { transform: rotate(-.19deg); }
+    .pshell:nth-child(13) { transform: rotate(.15deg); }
+
+    /* bordas card */
+    .pshell.bordas { grid-column: 1 / -1; transform: none !important; }
+    .pshell.bordas .pinner {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 38px 32px;
+    }
+    .bordas-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+    .borda-pill {
+      padding: 7px 20px; border-radius: 100px;
+      border: 1px solid rgba(192,164,118,.22);
+      background: rgba(192,164,118,.05);
+      font-size: .74rem; font-weight: 500; letter-spacing: .04em;
+      color: var(--gold);
+      transition: background 200ms ease, border-color 200ms ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .borda-pill:hover { background: rgba(192,164,118,.13); border-color: rgba(192,164,118,.4); }
+    }
 
     @media (hover: hover) and (pointer: fine) {
       .pshell:hover {
@@ -704,6 +729,120 @@
       </div>
     </div>
 
+    <!-- Frango Catupiry e Bacon -->
+    <div class="pshell reveal d1">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_12_200x200.jpeg" alt="Frango Catupiry e Bacon" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Frango</div>
+          <div class="pizza-name">Frango Catupiry e Bacon</div>
+          <p class="pizza-desc">Massa artesanal, molho pomodoro da casa, queijo mozzarella, coxa e sobrecoxa de frango desfiada, catupiry original e bacon crocante</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frango Milho e Bacon -->
+    <div class="pshell reveal d2">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_13_200x200.jpeg" alt="Frango Milho e Bacon" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Frango</div>
+          <div class="pizza-name">Frango Milho e Bacon</div>
+          <p class="pizza-desc">Massa artesanal, molho pomodoro da casa, queijo mozzarella, coxa e sobrecoxa de frango desfiada, milho verde selecionado e bacon crocante</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frango Milho Bacon e Catupiry -->
+    <div class="pshell reveal d3">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_10_200x200.jpeg" alt="Frango Milho Bacon e Catupiry" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Frango</div>
+          <div class="pizza-name">Frango Milho Bacon e Catupiry</div>
+          <p class="pizza-desc">Massa artesanal, molho pomodoro da casa, queijo mozzarella, frango desfiado de coxa e sobrecoxa, milho verde, bacon crocante e catupiry original</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atum -->
+    <div class="pshell reveal d1">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p4_3_200x200.jpeg" alt="Atum" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Mar</div>
+          <div class="pizza-name">Atum</div>
+          <p class="pizza-desc">Molho pomodoro da casa, queijo mozzarella, atum em lascas selecionadas, cebola roxa, azeitonas pretas e orégano</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vegetariana da Casa -->
+    <div class="pshell reveal d2">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p1_3_200x200.jpeg" alt="Vegetariana da Casa" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Vegetariana</div>
+          <div class="pizza-name">Vegetariana da Casa</div>
+          <p class="pizza-desc">Molho pomodoro da casa, queijo mozzarella, brócolis temperado no azeite, cebola, pimentão e orégano</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Palmito -->
+    <div class="pshell reveal d3">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_2_200x200.jpeg" alt="Palmito" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Vegetariana</div>
+          <div class="pizza-name">Palmito</div>
+          <p class="pizza-desc">Molho pomodoro da casa, queijo mozzarella, palmito fresco fatiado, cebola, azeitonas e orégano</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mia Vegana -->
+    <div class="pshell reveal d1">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p3_3_200x200.jpeg" alt="Mia Vegana" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Vegana</div>
+          <div class="pizza-name">Mia Vegana</div>
+          <p class="pizza-desc">Sem proteína animal. Molho de tomate, mozzarella vegana, brócolis, pimentão, cebola roxa e ervas frescas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bordas Especiais -->
+    <div class="pshell bordas reveal d2">
+      <div class="pinner">
+        <div class="pizza-cat">Personalização</div>
+        <div class="pizza-name" style="font-size:1.65rem;margin-bottom:10px;">Bordas Especiais</div>
+        <p class="pizza-desc" style="text-align:center;max-width:460px;flex:none;margin-bottom:0;">Escolha uma borda recheada para acompanhar qualquer pizza</p>
+        <div class="bordas-list">
+          <span class="borda-pill">Catupiry</span>
+          <span class="borda-pill">Cheddar</span>
+          <span class="borda-pill">Chocolate</span>
+          <span class="borda-pill">Goiabada</span>
+          <span class="borda-pill">Doce de Leite</span>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA card -->
     <div class="pshell pcta reveal d3">
       <div class="pinner">
@@ -742,7 +881,7 @@
           <div class="stat-l">Pizza Grande</div>
         </div>
         <div class="stat">
-          <div class="stat-n">20+</div>
+          <div class="stat-n">30+</div>
           <div class="stat-l">Sabores</div>
         </div>
       </div>
