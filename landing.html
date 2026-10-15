@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dio Mio — Pizzaria Artesanal · Brasília</title>
+  <meta name="description" content="Pizzaria artesanal em Brasília. Massa fina com 72 horas de fermentação. (61) 99365-6010">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #0D0B09;
+      --bg2:    #131009;
+      --bg3:    #191512;
+      --ink:    #1C1714;
+      --paper:  #FDFAF4;
+      --cream:  #F5F0E6;
+      --gold:   #C0A476;
+      --goldl:  #D4B98A;
+      --rust:   #A8341A;
+      --taupe:  #7C6F62;
+      --rule:   #E0D8C8;
+      --spring: cubic-bezier(0.32, 0.72, 0, 1);
+      --out:    cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--paper);
+      overflow-x: hidden;
+    }
+
+    /* grain overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 999;
+      pointer-events: none; opacity: 0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 22px; left: 50%; transform: translateX(-50%);
+      z-index: 200;
+      display: flex; align-items: center; gap: 28px;
+      padding: 10px 14px 10px 24px;
+      background: rgba(13,11,9,.62);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(192,164,118,.14); border-radius: 100px;
+      white-space: nowrap;
+      transition: border-color 350ms ease;
+    }
+    .nav:hover { border-color: rgba(192,164,118,.26); }
+
+    .nav-logo {
+      font-family: 'Cormorant Garant', serif; font-size: 1.25rem; font-weight: 600;
+      color: var(--paper); text-decoration: none; letter-spacing: .01em;
+    }
+    .nav-logo em { font-style: italic; font-weight: 300; }
+
+    .nav-div { width: 1px; height: 18px; background: rgba(192,164,118,.16); }
+
+    .nav-links { display: flex; gap: 22px; }
+    .nav-link {
+      font-size: .72rem; font-weight: 400; letter-spacing: .08em;
+      color: rgba(253,250,244,.45); text-decoration: none;
+      transition: color 200ms ease;
+    }
+    .nav-link:hover { color: var(--paper); }
+
+    /* buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Outfit', sans-serif; font-size: .72rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+      border: none; cursor: pointer; background: none;
+    }
+    .btn:active { transform: scale(.97) !important; }
+
+    .btn-pill {
+      padding: 9px 10px 9px 18px; border-radius: 100px;
+      background: var(--gold); color: var(--ink);
+      transition: background 220ms ease, transform 160ms var(--out);
+    }
+    .btn-pill:hover { background: var(--goldl); }
+
+    .btn-pill-lg { padding: 14px 14px 14px 26px; font-size: .78rem; }
+
+    .btn-outline {
+      padding: 14px 26px; border-radius: 100px;
+      background: transparent; color: var(--paper);
+      border: 1px solid rgba(253,250,244,.18);
+      transition: border-color 220ms ease, color 220ms ease, transform 160ms var(--out);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .btn-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(28,23,20,.14); font-size: .8rem; flex-shrink: 0;
+      transition: transform 220ms var(--out);
+    }
+    .btn-pill:hover .btn-icon { transform: translate(2px,-2px) scale(1.06); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden; padding: 140px 24px 100px;
+    }
+    .hero-bg {
+      position: absolute; inset: -12%;
+      background-image: url('dio-mio-imgs/p1_1_4489x1150.jpeg');
+      background-size: cover; background-position: center 35%;
+      filter: brightness(.17) saturate(.65);
+      will-change: transform;
+    }
+    .hero-vignette {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 45%, rgba(192,164,118,.05) 0%, transparent 65%),
+        radial-gradient(ellipse at center, transparent 25%, rgba(13,11,9,.65) 65%, rgba(13,11,9,.98) 100%);
+    }
+    .hero-topline {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 25%, var(--gold) 75%, transparent 100%);
+      opacity: .45;
+    }
+
+    .hero-content { position: relative; max-width: 1000px; width: 100%; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 5px 18px; border-radius: 100px;
+      border: 1px solid rgba(192,164,118,.22); background: rgba(192,164,118,.06);
+      font-size: .62rem; font-weight: 500; letter-spacing: .33em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 30px;
+      opacity: 0; transform: translateY(12px);
+      animation: revUp 700ms var(--out) 200ms forwards;
+    }
+    .hero-eyebrow-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: .55; }
+
+    .hero-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(5.5rem, 17vw, 14rem);
+      font-weight: 300; line-height: .83; letter-spacing: -.01em;
+      color: var(--paper);
+      opacity: 0; transform: translateY(24px);
+      animation: revUp 1000ms var(--out) 350ms forwards;
+    }
+    .hero-title em { font-style: italic; font-weight: 700; }
+
+    .hero-orn {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      margin: 34px auto;
+      opacity: 0; animation: fadeIn 600ms ease 700ms forwards;
+    }
+    .hero-orn-l { width: 54px; height: .75px; background: var(--gold); opacity: .4; }
+    .hero-orn-d { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    .hero-tag {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1rem, 2.4vw, 1.55rem);
+      font-weight: 300; font-style: italic; color: rgba(253,250,244,.5);
+      letter-spacing: .04em; margin-bottom: 44px;
+      opacity: 0; transform: translateY(12px);
+      animation: revUp 700ms var(--out) 600ms forwards;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+      opacity: 0; transform: translateY(10px);
+      animation: revUp 700ms var(--out) 800ms forwards;
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeIn 800ms ease 1400ms forwards;
+    }
+    .scroll-bar {
+      width: 1px; height: 46px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2.5s var(--spring) infinite 1.8s;
+    }
+    .scroll-lbl {
+      font-size: .56rem; letter-spacing: .33em; text-transform: uppercase;
+      color: rgba(192,164,118,.38);
+    }
+
+    @keyframes revUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes scrollPulse {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); opacity: .6; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── STRIP ── */
+    .strip {
+      background: var(--gold); height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; overflow: hidden; padding: 0 32px;
+    }
+    .strip-inner { display: flex; align-items: center; gap: 28px; }
+    .strip-item {
+      font-size: .64rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap;
+    }
+    .strip-sep { width: 3px; height: 3px; border-radius: 50%; background: rgba(28,23,20,.28); flex-shrink: 0; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 120px 40px; }
+    .section-hdr { text-align: center; margin-bottom: 68px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 14px; border-radius: 100px;
+      border: 1px solid rgba(192,164,118,.18); background: rgba(192,164,118,.05);
+      font-size: .6rem; font-weight: 500; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+    }
+
+    .sec-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      font-weight: 600; line-height: 1; letter-spacing: .005em;
+    }
+    .sec-title em { font-style: italic; font-weight: 300; }
+
+    .sec-sub {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.05rem; font-weight: 300; font-style: italic;
+      color: rgba(192,164,118,.45); margin-top: 12px; letter-spacing: .03em;
+    }
+
+    .orn { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px; }
+    .orn-l { width: 30px; height: .75px; background: var(--gold); opacity: .35; }
+    .orn-d { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); opacity: .5; }
+
+    /* ── PIZZA GRID ── */
+    .pizza-grid {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+
+    /* double-bezel shell */
+    .pshell {
+      background: rgba(192,164,118,.035);
+      border: 1px solid rgba(192,164,118,.09);
+      border-radius: 18px; padding: 5px;
+      transition: border-color 350ms var(--out), transform 350ms var(--out), box-shadow 350ms var(--out);
+      will-change: transform;
+    }
+    .pshell:nth-child(2) { transform: rotate(.22deg); }
+    .pshell:nth-child(3) { transform: rotate(-.18deg); }
+    .pshell:nth-child(4) { transform: rotate(-.28deg); }
+    .pshell:nth-child(5) { transform: rotate(.16deg); }
+    .pshell:nth-child(6) { transform: rotate(-.2deg); }
+    .pshell:nth-child(7) { transform: rotate(.18deg); }
+
+    @media (hover: hover) and (pointer: fine) {
+      .pshell:hover {
+        transform: rotate(0deg) translateY(-5px) !important;
+        border-color: rgba(192,164,118,.24);
+        box-shadow: 0 22px 56px rgba(0,0,0,.55);
+      }
+      .pshell:hover .pizza-img { transform: scale(1.05); filter: saturate(1.05); }
+    }
+
+    .pinner {
+      background: var(--bg3); border-radius: 13px; overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.04);
+    }
+
+    /* featured */
+    .pshell.featured { grid-column: 1 / -1; transform: none !important; }
+    .pshell.featured .pinner { display: grid; grid-template-columns: 300px 1fr; min-height: 272px; }
+    .pshell.featured .pizza-img-wrap { padding-top: 0; min-height: 272px; }
+
+    .pizza-img-wrap { position: relative; overflow: hidden; padding-top: 68%; }
+    .pizza-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: saturate(.85);
+      transition: transform 550ms var(--out), filter 550ms ease;
+    }
+
+    .pbadge {
+      position: absolute; top: 11px; left: 11px;
+      padding: 3px 10px; border-radius: 100px;
+      background: var(--gold); font-size: .56rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+    }
+    .pbadge-off {
+      position: absolute; top: 11px; right: 11px;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(168,52,26,.88); font-size: .56rem; font-weight: 600;
+      letter-spacing: .06em; color: #fff;
+    }
+
+    .pizza-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+    .pshell.featured .pizza-body { padding: 30px 34px; justify-content: center; }
+
+    .pizza-cat {
+      font-size: .57rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--taupe); margin-bottom: 7px;
+    }
+    .pizza-name {
+      font-family: 'Cormorant Garant', serif; font-size: 1.25rem; font-weight: 600;
+      color: var(--paper); line-height: 1.2; margin-bottom: 8px;
+    }
+    .pshell.featured .pizza-name { font-size: 2.1rem; margin-bottom: 10px; }
+
+    .pizza-desc {
+      font-size: .76rem; font-weight: 300; color: rgba(253,250,244,.4);
+      line-height: 1.65; flex: 1; margin-bottom: 14px;
+    }
+    .pizza-footer { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .pizza-price { font-size: 1.1rem; font-weight: 600; color: var(--paper); }
+    .pizza-price-old { font-size: .74rem; color: var(--taupe); text-decoration: line-through; }
+
+    /* cta card in grid */
+    .pshell.pcta { transform: none !important; }
+    .pshell.pcta .pinner {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; min-height: 220px; padding: 32px;
+      background: rgba(192,164,118,.03);
+      border: 1px dashed rgba(192,164,118,.15); border-radius: 13px;
+    }
+    .pcta-txt {
+      font-family: 'Cormorant Garant', serif; font-size: 1.4rem; font-weight: 300; font-style: italic;
+      color: rgba(253,250,244,.38); margin-bottom: 22px; line-height: 1.35;
+    }
+
+    /* ── CRAFT ── */
+    .craft-section { background: #0F0D0B; }
+    .craft-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+
+    .craft-img-shell {
+      background: rgba(192,164,118,.05); border: 1px solid rgba(192,164,118,.1);
+      border-radius: 20px; padding: 6px;
+    }
+    .craft-img-inner { border-radius: 14px; overflow: hidden; aspect-ratio: 1/1; }
+    .craft-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.78) contrast(1.06); display: block; }
+
+    .craft-eyebrow { display: inline-flex; }
+    .craft-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 600; line-height: 1.05; color: var(--paper); margin-top: 10px;
+    }
+    .craft-title em { font-style: italic; font-weight: 300; }
+
+    .craft-orn { display: flex; align-items: center; gap: 12px; margin: 18px 0 26px; }
+    .craft-orn-l { width: 26px; height: .75px; background: var(--gold); opacity: .38; }
+    .craft-orn-d { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); opacity: .5; }
+
+    .craft-p { font-size: .89rem; font-weight: 300; line-height: 1.88; color: rgba(253,250,244,.46); margin-bottom: 14px; }
+
+    .stats { display: flex; gap: 34px; margin-top: 38px; }
+    .stat { padding-left: 16px; border-left: 2px solid rgba(192,164,118,.2); }
+    .stat-n { font-family: 'Cormorant Garant', serif; font-size: 2.6rem; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .stat-l { font-size: .62rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgba(192,164,118,.32); }
+
+    /* ── SIZES ── */
+    .sizes-section { background: var(--paper); }
+    .sizes-section .sec-title { color: var(--ink); }
+    .sizes-section .sec-sub { color: var(--taupe); }
+    .sizes-section .eyebrow { border-color: rgba(168,52,26,.2); background: rgba(168,52,26,.05); color: var(--rust); }
+    .sizes-section .orn-l { background: var(--rule); opacity: .9; }
+    .sizes-section .orn-d { background: var(--rust); opacity: .4; }
+
+    .sizes-grid { max-width: 700px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .sshell {
+      background: rgba(28,23,20,.05); border: 1px solid rgba(28,23,20,.08);
+      border-radius: 20px; padding: 5px;
+      transition: border-color 300ms ease, transform 300ms var(--out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .sshell:hover { border-color: rgba(28,23,20,.2); transform: translateY(-4px); }
+    }
+    .sinner {
+      background: var(--ink); border-radius: 15px; padding: 38px 28px; text-align: center;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.04);
+    }
+    .sshell.light .sinner { background: var(--cream); }
+
+    .size-name { font-family: 'Cormorant Garant', serif; font-size: 2.1rem; font-weight: 600; color: var(--paper); margin-bottom: 8px; }
+    .sshell.light .size-name { color: var(--ink); }
+    .size-info { font-size: .71rem; font-weight: 300; color: rgba(192,164,118,.52); line-height: 1.75; margin-bottom: 22px; }
+    .sshell.light .size-info { color: var(--taupe); }
+    .size-price {
+      display: inline-block; padding: 5px 18px; border-radius: 100px;
+      border: 1px solid rgba(192,164,118,.2);
+      font-size: .73rem; font-weight: 500; letter-spacing: .03em; color: var(--gold);
+    }
+    .sshell.light .size-price { border-color: rgba(28,23,20,.14); color: var(--taupe); }
+
+    /* ── COMBOS ── */
+    .combos-grid { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+    .combo-card {
+      border: 1px solid rgba(192,164,118,.1); border-left: 3px solid var(--gold);
+      border-radius: 0 14px 14px 0; padding: 28px;
+      background: rgba(192,164,118,.03);
+      transition: background 280ms ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .combo-card:hover { background: rgba(192,164,118,.07); }
+    }
+    .combo-name { font-family: 'Cormorant Garant', serif; font-size: 1.3rem; font-weight: 600; color: var(--paper); margin-bottom: 10px; }
+    .combo-desc { font-size: .76rem; font-weight: 300; color: rgba(253,250,244,.38); line-height: 1.65; margin-bottom: 20px; }
+    .combo-price { font-size: 1.45rem; font-weight: 600; color: var(--paper); }
+
+    /* ── CTA ── */
+    .cta-section {
+      position: relative; min-height: 520px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden; padding: 120px 40px;
+    }
+    .cta-bg {
+      position: absolute; inset: -12%;
+      background-image: url('dio-mio-imgs/p2_7_4489x866.jpeg');
+      background-size: cover; background-position: center;
+      filter: brightness(.16) saturate(.6);
+      will-change: transform;
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,11,9,.88), rgba(13,11,9,.35) 50%, rgba(13,11,9,.88));
+    }
+    .cta-content { position: relative; max-width: 560px; }
+    .cta-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      font-weight: 300; font-style: italic; color: var(--paper);
+      line-height: 1.1; margin-bottom: 18px;
+    }
+    .cta-sub { font-size: .8rem; font-weight: 300; color: rgba(253,250,244,.42); letter-spacing: .08em; line-height: 1.9; margin-bottom: 38px; }
+    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* ── APPS ── */
+    .apps-section { background: #0F0D0B; padding: 80px 40px; }
+    .apps-grid {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      align-items: center; justify-content: center;
+      max-width: 860px; margin: 0 auto;
+    }
+    .app-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 26px; border-radius: 100px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      font-size: .82rem; font-weight: 500; letter-spacing: .04em;
+      color: var(--paper); text-decoration: none;
+      transition: background 250ms ease, border-color 250ms ease, transform 160ms var(--out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .app-btn:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.22); }
+    }
+    .app-btn:active { transform: scale(.97); }
+    .app-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .app-btn.ifood   .app-dot { background: #EA1D2C; box-shadow: 0 0 6px rgba(234,29,44,.5); }
+    .app-btn.nn99    .app-dot { background: #F7C842; box-shadow: 0 0 6px rgba(247,200,66,.5); }
+    .app-btn.anotai  .app-dot { background: #27AE60; box-shadow: 0 0 6px rgba(39,174,96,.5); }
+    .app-btn.rappi   .app-dot { background: #FF441F; box-shadow: 0 0 6px rgba(255,68,31,.5); }
+    .app-btn.goomer  .app-dot { background: #7B68EE; box-shadow: 0 0 6px rgba(123,104,238,.5); }
+    .app-btn.wpp     .app-dot { background: #25D366; box-shadow: 0 0 6px rgba(37,211,102,.5); }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #070604; padding: 62px 40px 42px; text-align: center;
+      border-top: 1px solid rgba(192,164,118,.06);
+    }
+    .footer-logo { font-family: 'Cormorant Garant', serif; font-size: 2.3rem; font-weight: 300; color: var(--paper); }
+    .footer-logo em { font-style: italic; font-weight: 700; }
+    .footer-tag { font-size: .62rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(192,164,118,.28); margin-top: 5px; margin-bottom: 26px; }
+    .footer-orn { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 28px; }
+    .footer-orn-l { width: 60px; height: .5px; background: rgba(192,164,118,.14); }
+    .footer-orn-d { width: 3px; height: 3px; border-radius: 50%; background: rgba(192,164,118,.18); }
+    .footer-info { font-size: .77rem; font-weight: 300; color: rgba(253,250,244,.22); line-height: 2; }
+    .footer-info a { color: rgba(192,164,118,.42); text-decoration: none; transition: color 200ms ease; }
+    .footer-info a:hover { color: rgba(192,164,118,.75); }
+    .footer-copy { margin-top: 34px; font-size: .6rem; letter-spacing: .1em; color: rgba(253,250,244,.1); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(26px); filter: blur(3px);
+      transition: opacity 680ms var(--out), transform 680ms var(--out), filter 680ms ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+    .d1 { transition-delay: 80ms; }
+    .d2 { transition-delay: 160ms; }
+    .d3 { transition-delay: 240ms; }
+    .d4 { transition-delay: 320ms; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .pizza-grid { grid-template-columns: repeat(2,1fr); }
+      .pshell.featured .pinner { grid-template-columns: 1fr; }
+      .pshell.featured .pizza-img-wrap { min-height: 0; padding-top: 55%; }
+      .combos-grid { grid-template-columns: 1fr; }
+      .craft-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 80px 20px; }
+      .nav { top: 14px; padding: 9px 12px 9px 20px; }
+      .hero { padding: 110px 20px 80px; }
+      .pizza-grid { grid-template-columns: 1fr; }
+      .sizes-grid { grid-template-columns: 1fr; }
+      .strip { padding: 0 20px; }
+      .strip-sep { display: none; }
+      .strip-inner { gap: 18px; flex-wrap: wrap; justify-content: center; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn, .hero-actions a { justify-content: center; }
+      .cta-section { padding: 80px 20px; }
+      .cta-btns { flex-direction: column; align-items: stretch; }
+      .cta-btns a { justify-content: center; }
+      .footer { padding: 50px 22px 36px; }
+      .stats { gap: 22px; }
+      .pshell:nth-child(n) { transform: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow,.hero-title,.hero-orn,.hero-tag,.hero-actions,.hero-scroll {
+        animation: fadeIn 300ms ease forwards; transform: none !important; filter: none !important;
+      }
+      .reveal { transition: opacity 300ms ease; transform: none !important; filter: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo"><em>Dio</em>&nbsp;Mio</a>
+  <div class="nav-div"></div>
+  <div class="nav-links">
+    <a href="#menu" class="nav-link">Cardápio</a>
+    <a href="#combos" class="nav-link">Combos</a>
+    <a href="#contato" class="nav-link">Contato</a>
+  </div>
+  <a href="https://wa.me/5561993656010" class="btn btn-pill" target="_blank" rel="noopener">
+    Pedir agora <span class="btn-icon">↗</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-topline"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Pizzaria Artesanal &nbsp;·&nbsp; Brasília
+      <span class="hero-eyebrow-dot"></span>
+    </div>
+    <h1 class="hero-title"><em>Dio</em> Mio</h1>
+    <div class="hero-orn">
+      <div class="hero-orn-l"></div>
+      <div class="hero-orn-d"></div>
+      <div class="hero-orn-l"></div>
+    </div>
+    <p class="hero-tag">Massa fina com 72 horas de fermentação</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5561993656010" class="btn btn-pill btn-pill-lg" target="_blank" rel="noopener">
+        Ver cardápio completo <span class="btn-icon">↗</span>
+      </a>
+      <a href="#menu" class="btn btn-outline">Nossos destaques</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span class="scroll-lbl">Scroll</span>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">Fermentação de 72 horas</div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">Massa artesanal</div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">Aberto até as 23h</div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">Pedido mínimo R$ 35</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="section" id="menu">
+  <div class="section-hdr reveal">
+    <div class="eyebrow">Nossa Carta</div>
+    <h2 class="sec-title">Pizzas <em>Selecionadas</em></h2>
+    <p class="sec-sub">Grandes · 35 cm · 8 fatias · até 2 sabores</p>
+    <div class="orn"><div class="orn-l"></div><div class="orn-d"></div><div class="orn-l"></div></div>
+  </div>
+
+  <div class="pizza-grid">
+    <!-- Featured -->
+    <div class="pshell featured reveal">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_3_200x200.jpeg" alt="Pepperrock" class="pizza-img" loading="lazy">
+          <span class="pbadge">Autoral</span>
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Assinatura da Casa</div>
+          <div class="pizza-name">Pepperrock</div>
+          <p class="pizza-desc">Molho pomodoro da casa, queijo mozzarella, pepperoni fatiado, cream cheese com azeitonas pretas e alho crocante</p>
+          <div class="pizza-footer"><span class="pizza-price">R$ 78,90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pshell reveal d1">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_1_200x200.jpeg" alt="Marguerita Tradicional" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Clássica</div>
+          <div class="pizza-name">Marguerita Tradicional</div>
+          <p class="pizza-desc">Molho pomodoro, mozzarella, tomatinhos grape, parmesão ralado e manjericão fresco</p>
+          <div class="pizza-footer"><span class="pizza-price">R$ 63,40</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pshell reveal d2">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_15_200x200.jpeg" alt="Quatro Queijos" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Queijos</div>
+          <div class="pizza-name">Quatro Queijos</div>
+          <p class="pizza-desc">Molho pomodoro rústico, mozzarella, Catupiry Original, gorgonzola e parmesão</p>
+          <div class="pizza-footer"><span class="pizza-price">R$ 74,40</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pshell reveal d3">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p4_18_159x200.jpeg" alt="Pepperoni" class="pizza-img" loading="lazy">
+          <span class="pbadge-off">10% off</span>
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Carnes</div>
+          <div class="pizza-name">Pepperoni</div>
+          <p class="pizza-desc">Molho pomodoro da casa, queijo mozzarella e pepperoni fatiado</p>
+          <div class="pizza-footer">
+            <span class="pizza-price">R$ 62,46</span>
+            <span class="pizza-price-old">R$ 69,40</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pshell reveal d1">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_11_200x200.jpeg" alt="Frango com Catupiry" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Frango</div>
+          <div class="pizza-name">Frango com Catupiry</div>
+          <p class="pizza-desc">Molho pomodoro, mozzarella, frango desfiado de coxa e sobrecoxa coberto com Catupiry Original</p>
+          <div class="pizza-footer"><span class="pizza-price">R$ 66,40</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pshell reveal d2">
+      <div class="pinner">
+        <div class="pizza-img-wrap">
+          <img src="dio-mio-imgs/p2_5_200x132.jpeg" alt="Romeu e Julieta" class="pizza-img" loading="lazy">
+        </div>
+        <div class="pizza-body">
+          <div class="pizza-cat">Doce</div>
+          <div class="pizza-name">Romeu e Julieta</div>
+          <p class="pizza-desc">Queijo mozzarella e creme de goiabada cascão</p>
+          <div class="pizza-footer"><span class="pizza-price">R$ 74,90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA card -->
+    <div class="pshell pcta reveal d3">
+      <div class="pinner">
+        <div class="pcta-txt">E muito mais no<br>cardápio completo…</div>
+        <a href="https://wa.me/5561993656010" class="btn btn-pill" target="_blank" rel="noopener">
+          Ver tudo <span class="btn-icon">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFT -->
+<section class="section craft-section">
+  <div class="craft-inner">
+    <div class="craft-img-shell reveal">
+      <div class="craft-img-inner">
+        <img src="dio-mio-imgs/p1_2_200x200.jpeg" alt="Artesanal Dio Mio" class="craft-img" loading="lazy">
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="eyebrow craft-eyebrow">Nossa Filosofia</div>
+      <h2 class="craft-title">Arte de<br><em>uma tradição</em></h2>
+      <div class="craft-orn">
+        <div class="craft-orn-l"></div><div class="craft-orn-d"></div><div class="craft-orn-l"></div>
+      </div>
+      <p class="craft-p">Cada pizza começa com uma escolha deliberada: fermentar a massa por 72 horas. Não porque é mais rápido — não é. Porque faz toda a diferença.</p>
+      <p class="craft-p">A fermentação lenta desenvolve sabores que a pressa não permite. Uma massa mais leve, mais digerível, com aquela textura que fica na memória.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">72h</div>
+          <div class="stat-l">Fermentação</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">35cm</div>
+          <div class="stat-l">Pizza Grande</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">20+</div>
+          <div class="stat-l">Sabores</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAMANHOS -->
+<section class="section sizes-section">
+  <div class="section-hdr reveal">
+    <div class="eyebrow" style="border-color:rgba(168,52,26,.2);background:rgba(168,52,26,.05);color:var(--rust);">Tamanhos</div>
+    <h2 class="sec-title" style="color:var(--ink);">Para cada <em>ocasião</em></h2>
+    <div class="orn">
+      <div class="orn-l" style="background:var(--rule);opacity:.9;"></div>
+      <div class="orn-d" style="background:var(--rust);opacity:.4;"></div>
+      <div class="orn-l" style="background:var(--rule);opacity:.9;"></div>
+    </div>
+  </div>
+  <div class="sizes-grid">
+    <div class="sshell reveal d1">
+      <div class="sinner">
+        <div class="size-name">Grande</div>
+        <div class="size-info">8 fatias · 35 cm<br>Até 2 sabores</div>
+        <span class="size-price">a partir de R$ 51,90</span>
+      </div>
+    </div>
+    <div class="sshell light reveal d2">
+      <div class="sinner">
+        <div class="size-name">Média</div>
+        <div class="size-info">4 fatias<br>1 sabor</div>
+        <span class="size-price">a partir de R$ 36,33</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMBOS -->
+<section class="section" id="combos">
+  <div class="section-hdr reveal">
+    <div class="eyebrow">Ofertas</div>
+    <h2 class="sec-title">Combos <em>Dio Mio</em></h2>
+    <p class="sec-sub">Mais por menos, sem abrir mão do sabor</p>
+    <div class="orn"><div class="orn-l"></div><div class="orn-d"></div><div class="orn-l"></div></div>
+  </div>
+  <div class="combos-grid">
+    <div class="combo-card reveal">
+      <div class="combo-name">Combo Casal</div>
+      <p class="combo-desc">1 Pizza Grande Calabresa + 1 Pizza Grande Prestígio + Coca-Cola Zero 2L</p>
+      <div class="combo-price">R$ 149,90</div>
+    </div>
+    <div class="combo-card reveal d2">
+      <div class="combo-name">Combo Autoral</div>
+      <p class="combo-desc">1 Pizza Grande Pepperrock + 1 Pizza Média Chocolate + Coca-Cola Zero 2L</p>
+      <div class="combo-price">R$ 149,90</div>
+    </div>
+    <div class="combo-card reveal d3">
+      <div class="combo-name">Combo Térmico</div>
+      <p class="combo-desc">1 Pizza Grande Frango Catupiry + 1 Pizza Grande Pepperrock + Copo Térmico Exclusivo Dio Mio</p>
+      <div class="combo-price">R$ 149,90</div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY APPS -->
+<section class="apps-section">
+  <div class="section-hdr reveal">
+    <div class="eyebrow">Delivery</div>
+    <h2 class="sec-title">Peça pelo seu <em>app favorito</em></h2>
+    <p class="sec-sub">Disponivel nas principais plataformas</p>
+  </div>
+  <div class="apps-grid reveal d1">
+    <!-- Substituir href="#" pelo link real do restaurante em cada plataforma -->
+    <a href="#" class="app-btn wpp"    target="_blank" rel="noopener"><span class="app-dot"></span>WhatsApp</a>
+    <a href="#" class="app-btn ifood"  target="_blank" rel="noopener"><span class="app-dot"></span>iFood</a>
+    <a href="#" class="app-btn nn99"   target="_blank" rel="noopener"><span class="app-dot"></span>99food</a>
+    <a href="#" class="app-btn anotai" target="_blank" rel="noopener"><span class="app-dot"></span>Anotai</a>
+    <a href="#" class="app-btn rappi"  target="_blank" rel="noopener"><span class="app-dot"></span>Rappi</a>
+    <a href="#" class="app-btn goomer" target="_blank" rel="noopener"><span class="app-dot"></span>Goomer</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content reveal">
+    <h2 class="cta-title">Pronto para pedir<br>sua pizza?</h2>
+    <p class="cta-sub">
+      Aberto até as 23h &nbsp;·&nbsp; Pedido mínimo R$ 35,00<br>
+      (61) 99365-6010
+    </p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5561993656010" class="btn btn-pill btn-pill-lg" target="_blank" rel="noopener">
+        Pedir pelo WhatsApp <span class="btn-icon">↗</span>
+      </a>
+      <a href="tel:+5561993656010" class="btn btn-outline">Ligar agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo"><em>Dio</em>&nbsp;Mio</div>
+  <div class="footer-tag">Pizzaria Artesanal · Brasília</div>
+  <div class="footer-orn">
+    <div class="footer-orn-l"></div><div class="footer-orn-d"></div><div class="footer-orn-l"></div>
+  </div>
+  <div class="footer-info">
+    <a href="tel:+5561993656010">(61) 99365-6010</a> &nbsp;·&nbsp; Aberto até as 23h<br>
+    Pedido mínimo R$ 35,00
+  </div>
+  <div class="footer-copy">© Dio Mio Pizzaria Artesanal · Brasília</div>
+</footer>
+
+<script>
+  // Scroll reveals via IntersectionObserver
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06, rootMargin: '-24px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Hero parallax
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const heroBg = document.getElementById('heroBg');
+    const ctaBg  = document.getElementById('ctaBg');
+    const heroEl = document.querySelector('.hero');
+    const ctaEl  = document.querySelector('.cta-section');
+
+    window.addEventListener('scroll', () => {
+      const sy = window.scrollY;
+      if (heroBg && sy < window.innerHeight * 1.5) {
+        heroBg.style.transform = `translateY(${sy * 0.22}px)`;
+      }
+      if (ctaBg && ctaEl) {
+        const rect = ctaEl.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const progress = -rect.top / window.innerHeight;
+          ctaBg.style.transform = `translateY(${progress * 40}px)`;
+        }
+      }
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
